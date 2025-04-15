@@ -11,11 +11,14 @@ class DataPreprocessor:
         """Fill numerical columns with median, categorical with mode."""
         for col in self.df.columns:
             if self.df[col].dtype in ['float64', 'int64']:
+                print(f"apply median to column {col}")
                 self.df[col] = self.df[col].fillna(self.df[col].median())
             else:
                 if self.df[col].mode().empty:
                     self.df[col] = self.df[col].fillna("Unknown")
+                    print(f"found empty rows in column {col} changed to Unknown")
                 else:
+                    print(f"apply mode to column {col}")
                     self.df[col] = self.df[col].fillna(self.df[col].mode()[0])
 
         print("fill_missing terminated successfully")
